@@ -1,0 +1,100 @@
+/* Text Styling */
+
+.red-header {
+    color: red;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.beatles-header {
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.beatles-link {
+    color: purple;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.beatles-body {
+    color: royalblue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.beatles-h2 {
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.beatles-ol {
+    color: saddlebrown;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.beatles-ul {
+    color: royalblue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+/* Layout Styling */
+
+.header {
+    height: 100px;
+    padding: 20px;
+    position: relative;
+}
+
+
+/* Let content flow naturally */
+
+.body {
+    margin: 100px 160px;
+    /* Top and bottom spacing, and room for side columns */
+    z-index: 0;
+    position: relative;
+}
+
+
+/* Side images float left/right */
+
+.left {
+    float: left;
+    width: 150px;
+    margin-top: 100px;
+}
+
+.right {
+    float: right;
+    width: 150px;
+    margin-top: 100px;
+}
+
+
+/* Optional footer (not used in your HTML, but cleaned up) */
+
+.footer {
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 100px;
+    position: fixed;
+}
+
+
+/* Clearfix to reset layout flow after floated columns */
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/* Tableau container styling */
+
+.tableau-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Match Game</title>
+    <link rel="stylesheet" href="css/AIstyles.css" />
+</head>
+
+<body>
+    <h1>Memory Match Game</h1>
+    <p id="message">Mistakes left: 4</p>
+
+    <div id="game-board"></div>
+
+    <button id="reset">Reset Game</button>
+    <button onclick="location.href='index.html'">Go to Home</button>
+
+    <script>
+        const gameBoard = document.getElementById('game-board');
+        const message = document.getElementById('message');
+        const resetBtn = document.getElementById('reset');
+
+        const totalPairs = 8; // now 8 pairs for 4x4
+        let cards = [];
+        let flipped = [];
+        let matched = 0;
+        let mistakes = 0;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function createBoard() {
+            cards = [];
+            flipped = [];
+            matched = 0;
+            mistakes = 0;
+            message.textContent = 'Mistakes left: 4';
+            gameBoard.innerHTML = '';
+
+            let numbers = [];
+            for (let i = 1; i <= totalPairs; i++) {
+                numbers.push(i, i); // 8 pairs = 16 cards
+            }
+
+            shuffle(numbers);
+
+            numbers.forEach((num, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.number = num;
+                card.dataset.index = index;
+                card.textContent = '';
+                card.addEventListener('click', handleFlip);
+                gameBoard.appendChild(card);
+                cards.push(card);
+            });
+
+            // Adjust layout for 4x4
+            gameBoard.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        }
+
+        function handleFlip(e) {
+            const card = e.currentTarget;
+            if (
+                card.classList.contains('flipped') ||
+                card.classList.contains('matched') ||
+                flipped.length === 2
+            ) return;
+
+            card.textContent = card.dataset.number;
+            card.classList.add('flipped');
+            flipped.push(card);
+
+            if (flipped.length === 2) {
+                const [first, second] = flipped;
+                if (first.dataset.number === second.dataset.number) {
+                    first.classList.add('matched');
+                    second.classList.add('matched');
+                    matched++;
+                    flipped = [];
+                    if (matched === totalPairs) {
+                        message.textContent = '🎉 You win!';
+                        message.classList.add('win');
+                    }
+                } else {
+                    mistakes++;
+                    message.textContent = `Mistakes left: ${4 - mistakes}`;
+                    setTimeout(() => {
+                        first.textContent = '';
+                        second.textContent = '';
+                        first.classList.remove('flipped');
+                        second.classList.remove('flipped');
+                        flipped = [];
+                    }, 1000);
+                    if (mistakes >= 4) {
+                        message.textContent = '💀 Game Over!';
+                        disableAll();
+                    }
+                }
+            }
+        }
+
+        function disableAll() {
+            cards.forEach(card => card.removeEventListener('click', handleFlip));
+        }
+
+        resetBtn.addEventListener('click', createBoard);
+
+        // Initial game setup
+        createBoard();
+    </script>
+</body>
+
+</html>
